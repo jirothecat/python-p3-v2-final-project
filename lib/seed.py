@@ -9,11 +9,14 @@ def seed_database():
     Animal.create_table()
     Rating.create_table()
 
-    Animal.create("Dog", "Golden Retriever",)
+    dog = Animal.create("Jolly", "Dog")
+    cat = Animal.create("Felix", "Cat")
+    capybara = Animal.create("Cheesecake", "Capybara")
 
-    Rating.create("Dog", 4, "Such a friendly animal!")
-    Rating.create("Cat", 3, "Very cute but it did scratch me...")
-    Rating.create("Capybara", 5, "So cute!")
+    Rating.create(dog.id, 4, "Such a friendly animal!")
+    Rating.create(cat.id, 3, "Very cute but it did scratch me...")
+    Rating.create(capybara.id, 5, "So cute!")
+    Rating.create(capybara.id, 5, "It's so fun to watch her eat grass!")
 
 
 seed_database()

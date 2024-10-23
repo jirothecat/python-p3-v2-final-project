@@ -59,7 +59,7 @@ class Animal:
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
 
-        type(self).all = [animal for animal in type(self).all if animal.id != self.id]
+        Animal.all = [animal for animal in Animal.all if animal.id != self.id]
 
     @classmethod
     def get_all(cls):

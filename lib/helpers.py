@@ -123,31 +123,44 @@ def list_ratings():
     if ratings:
         for rating in ratings:
             animal = Animal.find_by_id(rating.animal_id)
-            print(f"Rating ID: {rating.id}, Animal: {animal.name}, Value: {rating.value}")
+            if animal:
+                print(f"ID: {rating.id}, Name: {animal.name}, Animal: {animal.species}, Value: {rating.value}, Comment: {rating.comment}")
+            else:
+                print(f"ID: {rating.id}, Animal not found, Value: {rating.value}, Comment: {rating.comment}")
     else:
         print("No ratings found.")
 
+
 def find_rating():
-    id = input("Enter rating ID: ")
-    rating = Rating.find_by_id(int(id))
-    if rating:
-        animal = Animal.find_by_id(rating.animal_id)
-        print(f"Rating ID: {rating.id}, Animal: {animal.name}, Value: {rating.value}")
-    else:
-        print("Rating not found.")
+    try:
+        id = int(input("Enter rating ID: "))
+        rating = Rating.find_by_id(id)
+        if rating:
+            animal = Animal.find_by_id(rating.animal_id)
+            if animal:
+                print(f"ID: {rating.id}, Name: {animal.name}, Animal: {animal.species}, Value: {rating.value}, Comment: {rating.comment}")
+            else:
+                print(f"ID: {rating.id}, Animal not found, Value: {rating.value}, Comment: {rating.comment}")
+        else:
+            print("Rating not found.")
+    except ValueError:
+        print("Please enter a valid numeric ID.")
 
 def find_ratings_by_animal():
-    animal_id = input("Enter animal ID to find ratings: ")
-    animal = Animal.find_by_id(int(animal_id))
-    if animal:
-        ratings = Rating.find_by_animal_id(animal.id)
-        if ratings:
-            for rating in ratings:
-                print(f"Rating ID: {rating.id}, Value: {rating.value}")
+    try:
+        animal_id = int(input("Enter animal ID to find ratings: "))
+        animal = Animal.find_by_id(animal_id)
+        if animal:
+            ratings = Rating.find_by_animal_id(animal.id)
+            if ratings:
+                for rating in ratings:
+                    print(f"ID: {rating.id}, Name: {animal.name}, Animal: {animal.species}, Value: {rating.value}, Comment: {rating.comment}")
+            else:
+                print(f"No ratings found for animal {animal.name} (ID: {animal.id}).")
         else:
-            print(f"No ratings found for animal {animal.name} (ID: {animal.id}).")
-    else:
-        print("Animal not found.")
+            print("Animal not found.")
+    except ValueError:
+        print("Please enter a valid numeric ID.")
 
 def delete_rating():
     id = input("Enter rating ID to delete: ")
@@ -157,8 +170,6 @@ def delete_rating():
         print(f"Rating (ID: {rating.id}) deleted successfully.")
     else:
         print("Rating not found.")
-
-
 
 
 def exit_program():
